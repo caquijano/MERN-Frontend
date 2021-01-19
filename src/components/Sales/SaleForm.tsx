@@ -1,10 +1,22 @@
 import React, { useEffect, useState } from "react";
+import { Item } from "../Items/Item";
+import * as itemService from "../Items/itemService"
 import { Sale } from "./Sale";
 import * as saleService from "./saleService"
 import { SaleDetail } from "./SaleDetail";
 import * as saleDetailService from "./saleDetailService"
 
 import { BsX} from 'react-icons/bs';
+
+const [items, setItems] = useState<Item[]>([]);
+const [load, setLoad] = useState(true)
+const loadItems = async () => {
+  const res = await itemService.getItems();
+  setItems(res.data);
+};
+useEffect(() => {
+  loadItems();
+}, [load]);
 
 const SaleForm = () => {
   return (
