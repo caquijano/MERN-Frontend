@@ -12,7 +12,7 @@ export const getSales = async () => {
 export const getSale = async (id: string) => {
     return await axios.get<Sale>(`${API}/sales/${id}`)
 }
-export const updateSale = async (id: string, entry:Sale) => {
+export const updateSale = async (id: string, sale:Sale) => {
     return await axios.put<Sale>(`${API}/sales`)
 }
 export const deleteSale = async (id: string) => {

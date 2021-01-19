@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Sale } from "./Sale";
+import * as saleService from "./saleService"
+import { SaleDetail } from "./SaleDetail";
+import * as saleDetailService from "./saleDetailService"
+
 import { BsX} from 'react-icons/bs';
 
 const SaleForm = () => {
   return (
+    
     <div>
       <div
         className=" row p-5"

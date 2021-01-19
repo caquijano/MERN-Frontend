@@ -1,13 +1,12 @@
 export interface Sale{
     _id?: string;
-    invoice?: string;
-    cliente?: string;
-    date: string | Date;
+    detailId?: string ;
     productId?: string;
-    productName?: string;
-    amount: number;
-    priceBuy: number;
-    priceSale: number;
+    productName: string;
+    amount: Number;
+    priceBuy?:Number;
+    priceSale:Number;
+    utility?: number;
     createAt?: string | Date;
     updateAt?: string | Date;
 }
