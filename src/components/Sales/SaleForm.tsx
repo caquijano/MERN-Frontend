@@ -8,7 +8,8 @@ import * as saleDetailService from "./saleDetailService"
 
 import { BsX} from 'react-icons/bs';
 
-const [items, setItems] = useState<Item[]>([]);
+const SaleForm = () => {
+  const [items, setItems] = useState<Item[]>([]);
 const [load, setLoad] = useState(true)
 const loadItems = async () => {
   const res = await itemService.getItems();
@@ -17,8 +18,6 @@ const loadItems = async () => {
 useEffect(() => {
   loadItems();
 }, [load]);
-
-const SaleForm = () => {
   return (
     
     <div>
