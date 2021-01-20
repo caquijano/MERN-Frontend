@@ -21,10 +21,13 @@ const Navbar = () => {
               <a className="nav-link" href="items">Inventario</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="new-entry">Ingresar P</a>
+              <a className="nav-link" href="report">Reportes</a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="entries">Entradas</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="new-deposit">Consignaciones</a>
             </li>
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" data-toggle="dropdown" href="new-video" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
