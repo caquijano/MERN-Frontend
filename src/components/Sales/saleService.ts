@@ -3,7 +3,7 @@ import { Sale } from "./Sale";
 
 const API = 'http://localhost:4000'
 
-export const createSale = async (sale:Sale) => {
+export const createSale = async (sale:Sale[]) => {
     return await axios.post(`${API}/sales`, sale)
 }
 export const getSales = async () => {

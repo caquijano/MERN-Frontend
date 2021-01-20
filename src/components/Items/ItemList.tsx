@@ -14,6 +14,7 @@ const [search, setSearch] = useState("")
   const loadItems = async () => {
     const res = await itemService.getItems();
     setItems(res.data);
+    console.log(items)
   };
  
   const handleDelete = async (id:string) => {
