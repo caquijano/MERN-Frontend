@@ -1,5 +1,4 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { Item } from "../Items/Item";
 import { Entry } from "./Entry";
 import * as itemService from "../Items/itemService";
 import { toast } from "react-toastify";
