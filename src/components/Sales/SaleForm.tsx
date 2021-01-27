@@ -43,7 +43,6 @@ const SaleForm = () => {
       setPerson({...person, invoice: res.data.length+1})
 
     }
-    console.log(person)
   };
   const [person, setPerson] = useState<SaleDetail>({
     client: "",
@@ -60,7 +59,7 @@ const SaleForm = () => {
   };
   
   const save = async () => {
-    console.log(person)
+   
     await saleDetailService.createSaleDetail(person);
     article.forEach(element => {
       saveArt(element)
@@ -71,7 +70,7 @@ const SaleForm = () => {
   const saveArt = async (element: any) => {
     
     await saleService.createSale(element)
-    console.log("okay")
+   
     
   }
   const handleSubmit2 = (e: FormElemEvent): void => {
@@ -118,7 +117,6 @@ const SaleForm = () => {
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     setNewArticle({ ...newArticle, [e.target.name]: e.target.value });
-    console.log(newArticle);
   };
   const removeArticle = (i: number): void => {
     const newArt: Sale[] = [...article];
@@ -128,7 +126,6 @@ const SaleForm = () => {
   const loadItems = async () => {
     const res = await itemService.getItems();
     setItems(res.data);
-    console.log(items);
   };
   useEffect(() => {
     let t = 0;
@@ -330,7 +327,6 @@ const SaleForm = () => {
                               if (item.productId === element._id) {
                                 name = element.name;
                               }
-                              console.log(name);
                             });
                           }
                           return (

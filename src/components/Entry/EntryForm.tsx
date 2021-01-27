@@ -72,7 +72,6 @@ const EntryForm = () => {
         await itemService.updateItem(id, dates);
       };
       updateItems();
-      console.log("bien")
     }
     
   }, [load])

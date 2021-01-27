@@ -11,6 +11,8 @@ import { ItemForm } from "./components/Items/ItemForm";
 import ItemList from "./components/Items/ItemList";
 import EntryForm from "./components/Entry/EntryForm";
 import SaleForm from "./components/Sales/SaleForm";
+import SaleDList from "./components/Sales/SaleDList";
+import Sales from "./components/Sales/SaleList";
 import EntryList from "./components/Entry/EntryList";
 import 'bootswatch/dist/flatly/bootstrap.css';
 import Navbar from "./components/Navigation/Navbar";
@@ -34,6 +36,8 @@ ReactDOM.render(
         <Route path="/new-entry/:id" component={EntryForm} />
         <Route path="/entries" component={EntryList} />
         <Route path="/new-sale" component={SaleForm} />
+        <Route path="/sales" component={Sales} />
+        <Route path="/saledetail/:invoice" component={SaleDList} />
         <Route path="/report" component={Report} />
         <Route path= "/new-deposit" component={DepositForm}/>
         <Route path= "/deposit" component={DepositList}/>

@@ -36,7 +36,7 @@ const DepositForm = () => {
       };
       const handlSubmit = async (e: FormEvent<HTMLFormElement>)=>{
             e.preventDefault();
-            console.log(item)
+            
             const res = await depositService.createDeposit(item)
             
            toast.success('Articulo agregado satisfactoriamente')

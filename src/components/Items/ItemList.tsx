@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 import { Item } from "./Item";
 import * as itemService from "./itemService";
 import { BsTrash, BsPlusCircle } from 'react-icons/bs';
-import { FiEdit } from 'react-icons/fi';
+import { FiEdit, FiPlus } from 'react-icons/fi';
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 
@@ -14,7 +14,6 @@ const [search, setSearch] = useState("")
   const loadItems = async () => {
     const res = await itemService.getItems();
     setItems(res.data);
-    console.log(items)
   };
  
   const handleDelete = async (id:string) => {
@@ -52,13 +51,17 @@ const [search, setSearch] = useState("")
         
         </div>
         <div className="form-group col-lg-2">
-        <label className="col-form-label" htmlFor="inputDefault">Buscar producto: </label>
+        <label className="col-form-label" htmlFor="inputDefault">Buscar producto:  </label>
         </div>
          <div className="form-group col-lg-4">
         
         <input type="text" className="form-control" placeholder="Ingresar nombre de producto" id="inputDefault" onChange={handlerInputChange}/>
       </div>
-      <div className="form-group col-lg-5"></div>
+      <div className="form-group col-lg-2"></div>
+      <br/>
+      <div className="form-group col-lg-3">
+        <button type="button" onClick={()=>history.push("/new-item")} className="btn btn-primary" >Nuevo Producto <FiPlus/> </button>
+      </div>
       <br/>
         <div className="card border-primary mb-3" style={{ width: 1000 }}>
           <div className="card-header">Inventario</div>

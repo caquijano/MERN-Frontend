@@ -4,8 +4,9 @@ import { Item } from "../Items/Item";
 import * as entryService from "./entryService";
 import * as itemService from "../Items/itemService";
 import { BsTrash } from 'react-icons/bs';
-import { FiEdit } from 'react-icons/fi';
+import { FiEdit} from 'react-icons/fi';
 import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 const EntryList = () => {
 
   const initialState2 = {
@@ -15,7 +16,7 @@ const EntryList = () => {
     stock: 0,
     price: 0,
   };
-
+  const history = useHistory();
     const [entry, setEntry] = useState<Entry[]>([]);
     const [load, setLoad] = useState(true)
     const [loader, setLoader] = useState(true)
@@ -30,7 +31,7 @@ const EntryList = () => {
       const handleDelete = async (id:string, productId: string, amount:number) => {
         const it = await itemService.getItem(productId)
         const itt = it.data
-        console.log(it.data)
+        
         setIds(`${itt._id}`)
            setDates({...dates, name: itt.name, description: itt.description, kind: itt.kind, stock:parseInt(`${itt.stock}`)-parseInt(`${amount}`), price:itt.price }) 
            setLoader(!loader)
@@ -44,7 +45,7 @@ const EntryList = () => {
       useEffect(() => {
         if (ids && dates) {
           const updateItems = async () => {
-            console.log(dates)
+           
             await itemService.updateItem(ids, dates);
           };
           updateItems();
@@ -64,6 +65,8 @@ const EntryList = () => {
           justifyContent: "center",
         }}
       >
+        
+      <br/>
         <div className="card border-primary mb-3" style={{ width: 1000 }}>
           <div className="card-header">Entradas a almacen</div>
           <div className="card-body">
