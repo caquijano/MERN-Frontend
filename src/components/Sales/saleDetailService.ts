@@ -9,8 +9,8 @@ export const createSaleDetail = async (saleDetail:SaleDetail) => {
 export const getSaleDetails = async () => {
     return await axios.get(`${API}/saleDetails`)
 }
-export const getSaleDetail = async (id: string) => {
-    return await axios.get<SaleDetail>(`${API}/saleDetails/${id}`)
+export const getSaleDetail = async (invoice: string) => {
+    return await axios.get<SaleDetail>(`${API}/saleDetails/${invoice}`)
 }
 export const updateSaleDetail = async (id: string, saleDetail:SaleDetail) => {
     return await axios.put<SaleDetail>(`${API}/saleDetails`)

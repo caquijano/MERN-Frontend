@@ -65,7 +65,7 @@ const SaleForm = () => {
       saveArt(element)
     });
     toast.success("Articulo agregado satisfactoriamente");
-    history.push("/items");
+    history.push("/sales");
   };
   const saveArt = async (element: any) => {
     
