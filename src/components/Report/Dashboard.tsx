@@ -13,7 +13,7 @@ const Dashboard = () => {
   const [deposit, setDeposit] = useState<Deposit[]>([]);
   const [load, setLoad] = useState(true);
   const [totalSale, setTotalSale] = useState(0);
-
+  const [totalDeposit, setTotalDeposit] = useState(0);
   const loadSales = async () => {
     const res = await SaleDetailService.getSaleDetails();
     setSaleDetail(res.data);
@@ -27,8 +27,14 @@ const Dashboard = () => {
           total = element.totalSale + total
       });
       setTotalSale(total)
-     
   }
+  const deposits = async () => {
+    let total = 0;
+    deposit.forEach(element => {
+        total = element.amount + total
+    });
+    setTotalDeposit(total)
+}
 
   useEffect(() => {
       loadSales();
@@ -36,7 +42,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     sales();
-  }, [saleDetail])
+    deposits();
+  }, [saleDetail, deposit])
   
 
   return (
@@ -82,7 +89,7 @@ const Dashboard = () => {
             >
               <div className="card-header">Consignaciones</div>
               <div className="card-body">
-                <h4 className="card-title"><FcMoneyTransfer/> $00000</h4>
+                <h4 className="card-title"><FcMoneyTransfer/> ${totalDeposit}</h4>
               </div>
             </div>
             <div

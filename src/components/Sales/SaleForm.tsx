@@ -72,16 +72,23 @@ const SaleForm = () => {
       saveArt(element)
       updateItems(`${element.productId}`, parseInt(`${element.amount}`))
     });
-    setTimeout(()=>history.push("/sales"), 5000)
+    setTimeout(()=>history.push("/sales"), 3000)
     toast.success("Articulo agregado satisfactoriamente");
     //history.push("/sales");
   };
+
+  const handleCancel = async () => {
+    
+    history.goBack();
+  }
   const saveArt = async (element: any) => {
     
     await saleService.createSale(element)
    
     
   }
+  
+
   const handleSubmit2 = (e: FormElemEvent): void => {
     e.preventDefault();
     addArticle(
@@ -399,7 +406,7 @@ const SaleForm = () => {
             >
               Guardar
             </button>
-            <button className="btn btn-danger" style={{}}>
+            <button className="btn btn-danger" onClick={handleCancel}>
               Cancelar
             </button>
           </div>

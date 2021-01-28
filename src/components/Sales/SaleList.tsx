@@ -48,7 +48,7 @@ const [search, setSearch] = useState("")
         </div>
          <div className="form-group col-lg-4">
         
-        <input type="text" className="form-control" placeholder="Ingresar nombre de producto" id="inputDefault" onChange={handlerInputChange}/>
+        <input type="text" className="form-control" placeholder="Ingresar nombre de cliente" id="inputDefault" onChange={handlerInputChange}/>
       </div>
       <div className="form-group col-lg-2"></div>
       <br/>
@@ -62,7 +62,6 @@ const [search, setSearch] = useState("")
             <table className="table table-striped">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
                   <th scope="col">N° Fact</th>
                   <th scope="col">Cliente</th>
                   <th scope="col">Fecha</th>
@@ -75,7 +74,6 @@ const [search, setSearch] = useState("")
                   return (
                     <tbody key={index}>
                       <tr>
-                        <th scope="row">{index+1}</th>
                         <td>{item.invoice}</td>
                         <td>{item.client}</td>
                         <td>{item.date}</td>

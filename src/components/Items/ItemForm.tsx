@@ -91,6 +91,7 @@ export const ItemForm = () => {
                     onChange={handlerInputChange}
                     
                   >
+                    <option selected >Tipo...</option>
                     <option value="Pinturas">Pinturas</option>
                     <option value="Ferreteria">Ferreteria</option>
                     <option value="Otro">Otro..</option>
@@ -130,10 +131,9 @@ export const ItemForm = () => {
               <div className="form-group">
                 <div className="col-lg-10 col-lg-offset-2">
                   <button type="reset" className="btn btn-default">
-                    Cancel
                   </button>
                   <button  type="submit" className="btn btn-primary" >
-                    Submit
+                    Agregar
                   </button>
                 </div>
               </div>

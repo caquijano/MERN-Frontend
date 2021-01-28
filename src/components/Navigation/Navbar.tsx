@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Dropdown } from "react-bootstrap";
+import {AiOutlineDashboard} from 'react-icons/ai'
 
 const Navbar = () => {
   const [drop, setDrop] = useState(false);
@@ -8,35 +9,29 @@ const Navbar = () => {
       <div className="collapse navbar-collapse" id="navbarColor01">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item active">
-            <a className="nav-link" href="new-video">
+            <a className="nav-link" href="/">
               {" "}
               <h5>Ferreteria Habitat</h5>
               <span className="sr-only">(current)</span>
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="items">
+            <a className="nav-link" href="/items">
               Inventario
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="entries">
+            <a className="nav-link" href="/entries">
               Entradas
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="sales">
+            <a className="nav-link" href="/sales">
               Ventas
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="report">
-              Reportes
-            </a>
-          </li>
-
-          <li className="nav-item">
-            <a className="nav-link" href="new-deposit">
+            <a className="nav-link" href="/new-deposit">
               Consignaciones
             </a>
           </li>
@@ -51,6 +46,13 @@ const Navbar = () => {
               <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
+          <li className="nav-item">
+            <a className="nav-link" href="/dashboard">
+              <AiOutlineDashboard/>
+              {"         "}
+              Administración
+            </a>
+          </li>
         </ul>
         <form className="form-inline my-2 my-lg-0">
           <input
