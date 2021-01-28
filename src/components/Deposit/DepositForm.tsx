@@ -61,6 +61,7 @@ const DepositForm = () => {
     const a = usCurrencyFormat.format(ventas); // "$100.10"
     const b = usCurrencyFormat.format(total); // "$100.10"
     const c = usCurrencyFormat.format(totalDeuda- total); // "$100.10"
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
     const handlerInputChange = (
         e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -120,7 +121,7 @@ const DepositForm = () => {
 
 
 
-                                <div className="col-lg-2 row form-group">
+                                <div className="col-lg-3 row form-group">
                                     <label htmlFor="select" className="col-lg-4 control-label">
                                         Tipo
                                     </label>
@@ -131,6 +132,7 @@ const DepositForm = () => {
                                         id="kind"
                                         onChange={handlerInputChange}
                                     >
+                                        <option selected>Seleccionar</option>
                                         <option value="Efectivo">Efectivo</option>
                                         <option value="Banco">Banco</option>
                                         <option value="Nequi">Nequi</option>
