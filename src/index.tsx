@@ -15,6 +15,7 @@ import SaleDList from "./components/Sales/SaleDList";
 import Sales from "./components/Sales/SaleList";
 import EntryList from "./components/Entry/EntryList";
 import 'bootswatch/dist/flatly/bootstrap.css';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import Navbar from "./components/Navigation/Navbar";
 import Footer from "./components/Navigation/Footer";
 import 'react-toastify/dist/ReactToastify.css';

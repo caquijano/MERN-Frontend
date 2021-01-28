@@ -8,13 +8,22 @@ import * as itemService from "../Items/itemService";
 import { Sale } from "./Sale";
 import * as saleService from "./saleService";
 import { BsX } from "react-icons/bs";
+import {Modal, Button} from 'react-bootstrap'
+import Loader from 'react-loader-spinner'
+
 
 type FormElemEvent = React.FormEvent<HTMLFormElement>;
 
 const SaleForm = () => {
   const history = useHistory();
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const [saleD, setSaleD] = useState<SaleDetail[]>([]);
   const [item, setItem] = useState<Item>();
+  const [it, setIt] = useState<Item>();
   const [items, setItems] = useState<Item[]>([]);
   const [article, setArticle] = useState<Sale[]>([]);
   const [newArticle, setNewArticle] = useState<Sale>({
@@ -55,17 +64,17 @@ const SaleForm = () => {
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     setPerson({ ...person, [e.target.name]: e.target.value });
-    
   };
   
   const save = async () => {
-   
     await saleDetailService.createSaleDetail(person);
     article.forEach(element => {
       saveArt(element)
+      updateItems(`${element.productId}`, parseInt(`${element.amount}`))
     });
+    setTimeout(()=>history.push("/sales"), 5000)
     toast.success("Articulo agregado satisfactoriamente");
-    history.push("/sales");
+    //history.push("/sales");
   };
   const saveArt = async (element: any) => {
     
@@ -127,6 +136,21 @@ const SaleForm = () => {
     const res = await itemService.getItems();
     setItems(res.data);
   };
+  const updateItems = async (id : string, amount: number) => {
+    const res = await itemService.getItem(id);
+    setItem(res.data)
+    setIt({...it, _id: res.data._id, name: res.data.name, description: res.data.description, kind: res.data.kind, price: res.data.price, stock: res.data.stock-amount, createAt: res.data.createAt });
+    
+  };
+  useEffect(() => {
+    if (it?._id ) {
+      const updateItem = async () => {
+        await itemService.updateItem(`${it._id}`, it);
+      };
+      updateItem();
+    }
+    
+  }, [it])
   useEffect(() => {
     let t = 0;
     article.forEach(element => {
@@ -149,7 +173,7 @@ const SaleForm = () => {
           width: "100%",
           justifyContent: "center",
         }}
-      >
+      >      
         <div className="form-group col-lg-5"></div>
         <br />
         <div className="card border-primary mb-3" style={{ width: 1000 }}>
@@ -371,6 +395,7 @@ const SaleForm = () => {
               form="myform"
               className="btn btn-success"
               style={{ margin: 20 }}
+              onClick={handleShow}
             >
               Guardar
             </button>
@@ -380,7 +405,38 @@ const SaleForm = () => {
           </div>
         </div>
       </div>
+      <div> 
+        <div >  
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+        centered={true}
+      >
+        <Modal.Body  style={{backgroundColor: "#000", }}>
+          <div style={{
+            borderWidth: 3,
+            borderColor: "#fff",
+            width: "100%"
+          }}>
+          <Loader
+         type="Bars"
+         color="#18bc9c"
+         height={100}
+         width={"100%"}
+         timeout={5000} //3 secs
+      />
+      </div>
+        </Modal.Body>
+        <Modal.Footer style={{backgroundColor: "#000", justifyContent: 'center', color: "#18bc9c "}}>
+             Por favor espere que cargue la venta...
+        </Modal.Footer>
+      </Modal>
     </div>
+    </div>  
+    </div>
+    
   );
 };
 
