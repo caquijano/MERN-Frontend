@@ -22,6 +22,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Report from './components/reports/Report';
 import DepositForm from './components/Deposit/DepositForm';
 import DepositList from './components/Deposit/DepositList';
+import Dashboard from './components/Report/Dashboard'
 
 
 ReactDOM.render(
@@ -42,6 +43,7 @@ ReactDOM.render(
         <Route path="/report" component={Report} />
         <Route path= "/new-deposit" component={DepositForm}/>
         <Route path= "/deposit" component={DepositList}/>
+        <Route path= "/dashboard" component={Dashboard}/>
       </Switch>
       <ToastContainer />
     </BrowserRouter>

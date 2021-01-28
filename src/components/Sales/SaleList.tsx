@@ -17,14 +17,6 @@ const [search, setSearch] = useState("")
     setSaleDetail(res.data);
   };
  
-  const handleDelete = async (id:string) => {
-      if (window.confirm("¿Realmente desea eliminar este articulo?")) {
-        await SaleDetailService.deleteSaleDetail(id)
-        toast.error("Articulo Eliminado correctamente")
-          setLoad(!load)
-      }
-      
-  }
   const handlerInputChange = (
     e: ChangeEvent<HTMLInputElement>
   ) => {
