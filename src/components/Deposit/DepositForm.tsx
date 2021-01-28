@@ -15,7 +15,7 @@ const DepositForm = () => {
         depositNumber: "",
         kind: "",
         amount: 0,
-        date: new Date(1995, 11, 17)
+        date: ""
     };
 
     const [item, setItem] = useState<Deposit>(initialState);
