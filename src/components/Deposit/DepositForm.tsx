@@ -1,54 +1,93 @@
-import React, {useState, ChangeEvent, FormEvent, useEffect} from 'react'
-import {Deposit} from './Deposit'
+import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react'
+import { Deposit } from './Deposit'
+import { SaleDetail } from '../Sales/SaleDetail'
+import { Sale } from '../Sales/Sale'
 import * as depositService from './depositService'
 import { toast } from "react-toastify";
 import ItemList from '../Items/ItemList';
-
+import * as saleDetailService from '../Sales/saleDetailService'
+import * as saleService from '../Sales/saleService'
 
 const DepositForm = () => {
-
+    const usCurrencyFormat = new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'})
+    
     const initialState = {
-        depositNumber:"",
+        depositNumber: "",
         kind: "",
         amount: 0,
         date: ""
-      };
+    };
 
     const [item, setItem] = useState<Deposit>(initialState);
     const [deposits, setDeposit] = useState<Deposit[]>([])
+    const [salesDetail, setSalesDetail] = useState<SaleDetail[]>([])
+    const [sales, setSales] = useState<Sale[]>([])
     const [load, setLoad] = useState(true)
-   const [total, setTotal] = useState(0)
+    const [total, setTotal] = useState(0)
+    const [ventas, setVentas] = useState(0)
+    const [totalDeuda, setTotalDeuda] = useState(0)
 
     const loadDeposit = async () => {
         const res = await depositService.getDeposits();
         setDeposit(res.data)
-        let t=0;
-        deposits.forEach(element => { 
-             t = element.amount + t            
+    }
+    const loadVentas = async () => {
+        const res = await saleDetailService.getSaleDetails();
+        setSalesDetail(res.data)
+        const res2 = await saleService.getSales();
+        setSales(res2.data)
+    }
+
+    const totalDatos = async () => {
+        let t = 0;
+        deposits.forEach(element => {
+            t = element.amount + t
         });
         setTotal(t)
+        let v = 0;
+        v = 0;
+        salesDetail.forEach(element => {
+            v = element.totalSale + v
+        })
+        setVentas(v)
+        let p = 0;
+        sales.forEach(element => {
+            p = (element.amount * parseInt(`${element.priceBuy}`)) + p
+        })
+        setTotalDeuda(p)
 
     }
-      const handlerInputChange = (
+
+    const a = usCurrencyFormat.format(ventas); // "$100.10"
+    const b = usCurrencyFormat.format(total); // "$100.10"
+    const c = usCurrencyFormat.format(totalDeuda- total); // "$100.10"
+
+    const handlerInputChange = (
         e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-      ) => {
+    ) => {
         setItem({ ...item, [e.target.name]: e.target.value });
-      };
-      const handlSubmit = async (e: FormEvent<HTMLFormElement>)=>{
-            e.preventDefault();
-            
-            const res = await depositService.createDeposit(item)
-            
-           toast.success('Articulo agregado satisfactoriamente')
-           setLoad(!load)
-            //history.push('/items')
-      }
+    };
+    const handlSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const res = await depositService.createDeposit(item)
+
+        toast.success('Articulo agregado satisfactoriamente')
+        setLoad(!load)
+        //history.push('/items')
+    }
+
+    useEffect(() => {
+        loadDeposit();
+        loadVentas();
+
+    }, [load])
+
+    useEffect(() => {
+        totalDatos();
+    }, [deposits, salesDetail, sales])
 
 
-      useEffect(() => {
-          loadDeposit();
-      }, [load])
-    
     return (
         <div
             className=" row-5 m-3"
@@ -79,7 +118,7 @@ const DepositForm = () => {
                                     />
                                 </div>
 
-                              
+
 
                                 <div className="col-lg-2 row form-group">
                                     <label htmlFor="select" className="col-lg-4 control-label">
@@ -140,7 +179,7 @@ const DepositForm = () => {
             </div>
 
             <div className=" row">
-                <div className="card border-primary  form-group col-md-8 ml-3 " style={{height: "500px"}}  >
+                <div className="card border-primary  form-group col-md-8 ml-3 " style={{ height: "500px" }}  >
                     <div className="table-responsive" >
                         <table className="table table-striped table-sm">
                             <thead>
@@ -151,31 +190,53 @@ const DepositForm = () => {
                                     <th>E</th>
                                 </tr>
                             </thead>
-                            {deposits.map((deposit,index)=>{
-                                return(
+                            {deposits.map((deposit, index) => {
+                                return (
                                     <tbody key={index}>
-                                    <tr>
-                                        <td>{deposit.depositNumber}</td>
-                                       
-                                        <td>{deposit.kind}</td>
-                                        <td>{deposit.amount}</td>
-                                    
-                                        <td>{deposit.date}</td>
-                                    </tr>
-    
-                                </tbody>
+                                        <tr>
+                                            <td>{deposit.depositNumber}</td>
+
+                                            <td>{deposit.kind}</td>
+                                            <td>{deposit.amount}</td>
+
+                                            <td>{deposit.date}</td>
+                                        </tr>
+
+                                    </tbody>
 
                                 )
 
                             })}
-                           
+
                         </table>
                     </div>
                 </div>
 
                 <div className="card border-primary form-group  col-md-3 ml-2  " >
-                    <a href="">{total}</a>
+
+                    <div>
+                        <div className="card border-secondary mb-3" style={{ maxWidth: '20rem' }}>
+                            <div className="card-header">Ventas</div>
+                            <div className="card-body">
+                                <h4 className="card-title">{a}</h4>
+                            </div>
+                        </div>
+                        <div className="card border-success mb-3" style={{ maxWidth: '20rem' }}>
+                            <div className="card-header">Consignado</div>
+                            <div className="card-body">
+                                <h4 className="card-title">{b}</h4>
+                            </div>
+                        </div>
+                        <div className="card border-danger mb-3" style={{ maxWidth: '20rem' }}>
+                            <div className="card-header">Deuda</div>
+                            <div className="card-body">
+                                <h4 className="card-title">{c}</h4>
+                                </div>
+                        </div>
+                    </div>
+                    
                 </div>
+
             </div>
 
         </div >
