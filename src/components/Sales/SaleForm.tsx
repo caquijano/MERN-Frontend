@@ -8,7 +8,7 @@ import * as itemService from "../Items/itemService";
 import { Sale } from "./Sale";
 import * as saleService from "./saleService";
 import { BsX } from "react-icons/bs";
-import {Modal, Button} from 'react-bootstrap'
+import {Modal} from 'react-bootstrap'
 import Loader from 'react-loader-spinner'
 
 
@@ -20,8 +20,6 @@ const SaleForm = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  const [saleD, setSaleD] = useState<SaleDetail[]>([]);
   const [item, setItem] = useState<Item>();
   const [it, setIt] = useState<Item>();
   const [items, setItems] = useState<Item[]>([]);
@@ -37,7 +35,6 @@ const SaleForm = () => {
   });
   const loadSalesD = async () => {
     const res = await saleDetailService.getSaleDetails();
-    setSaleD(res.data);
     changeDetail(res);
   };
   const handleSubmit = async (e: FormElemEvent) => {

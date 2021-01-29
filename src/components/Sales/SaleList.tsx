@@ -1,11 +1,8 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { SaleDetail } from "./SaleDetail";
 import * as SaleDetailService from "./saleDetailService";
-//import { Item } from "./Item";
-//import * as itemService from "./itemService";
 import { BsEyeFill } from 'react-icons/bs';
 import { FiPlus } from 'react-icons/fi';
-import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 const SaleList = () => {
     const history = useHistory();

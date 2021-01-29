@@ -6,7 +6,6 @@ import { Sale } from "../Sales/Sale";
 import * as SaleService from "../Sales/saleService";
 import { Deposit } from "../Deposit/Deposit";
 import * as DepositService from "../Deposit/depositService";
-import { useHistory } from "react-router-dom";
 import { AiOutlineShoppingCart, AiOutlineWarning} from "react-icons/ai";
 import { FcMoneyTransfer } from "react-icons/fc";
 import { GrMoney } from "react-icons/gr";
@@ -16,7 +15,6 @@ const Dashboard = () => {
   const [saleDetail, setSaleDetail] = useState<SaleDetail[]>([]);
   const [sale, setSale] = useState<Sale[]>([]);
   const [deposit, setDeposit] = useState<Deposit[]>([]);
-  const [load, setLoad] = useState(true);
   const [totalSale, setTotalSale] = useState(0);
   const [totalDeposit, setTotalDeposit] = useState(0);
   const [totalUtility, setTotalUtility] = useState(0);
