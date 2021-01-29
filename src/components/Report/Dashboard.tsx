@@ -6,24 +6,30 @@ import { Sale } from "../Sales/Sale";
 import * as SaleService from "../Sales/saleService";
 import { Deposit } from "../Deposit/Deposit";
 import * as DepositService from "../Deposit/depositService";
+import { Expense } from "../Expenses/Expense";
+import * as ExpenseService from "../Expenses/expenseService";
 import { AiOutlineShoppingCart, AiOutlineWarning} from "react-icons/ai";
 import { FcMoneyTransfer } from "react-icons/fc";
 import { GrMoney } from "react-icons/gr";
-import { GiPayMoney } from "react-icons/gi";
+import { GiPayMoney, GiPiggyBank } from "react-icons/gi";
 
 const Dashboard = () => {
   const [saleDetail, setSaleDetail] = useState<SaleDetail[]>([]);
   const [sale, setSale] = useState<Sale[]>([]);
   const [deposit, setDeposit] = useState<Deposit[]>([]);
+  const [expense, setExpense] = useState<Expense[]>([]);
   const [totalSale, setTotalSale] = useState(0);
   const [totalDeposit, setTotalDeposit] = useState(0);
   const [totalUtility, setTotalUtility] = useState(0);
   const [totalDebt, setTotalDebt] = useState(0);
+  const [totalExpenses, setTotalExpenses] = useState(0);
   const loadSales = async () => {
     const res = await SaleDetailService.getSaleDetails();
     setSaleDetail(res.data);
     const res2 = await DepositService.getDeposits();
     setDeposit(res2.data);
+    const res3 = await ExpenseService.getExpenses();
+    setExpense(res3.data);
     const res4 = await SaleService.getSales();
     setSale(res4.data);
   };
@@ -43,6 +49,13 @@ const Dashboard = () => {
     });
     setTotalDeposit(total);
   };
+  const expenses = async () => {
+    let total = 0;
+    expense.forEach((element) => {
+      total = element.price + total;
+    });
+    setTotalExpenses(total);
+  }
   const utilities = async () => {
     let total = 0;
     let debts = 0;
@@ -62,7 +75,8 @@ const Dashboard = () => {
     sales();
     deposits();
     utilities();
-  }, [saleDetail, deposit, sale]);
+    expenses();
+  }, [saleDetail, deposit, sale, expense]);
 
   return (
     <div>
@@ -82,10 +96,10 @@ const Dashboard = () => {
             style={{ alignItems: "center", textAlign: "center" }}
           >
             <div className=" form-group col-lg-2">
-              <img src={logo} style={{ width: "100%" }} />
+              <img src={logo} style={{ width: "80%" }} />
             </div>
             <div className=" form-group col-lg-10">
-              <h1>Administración Ferreteria Habitat</h1>
+              <h2>Administración Ferreteria Habitat</h2>
             </div>
           </div>
           <hr style={{ height: 3, backgroundColor: "#18bc9c" }} />
@@ -120,19 +134,18 @@ const Dashboard = () => {
             >
               <div className="card-header">Gastos</div>
               <div className="card-body">
-                <h4 className="card-title"><GiPayMoney size={40}/> $000000</h4>
+                <h4 className="card-title"><GiPayMoney size={40}/> ${totalExpenses}</h4>
               </div>
             </div>
 
             <div
-              className="col-lg-4 card text-black mb-3"
+              className="col-lg-4 card border-primary text-black mb-3"
               style={{
                 maxWidth: "27%",
                 marginInline: 25,
-                backgroundColor: "#54FA27",
               }}
             >
-              <div className="card-header">Utilidad</div>
+              <div className="card-header">Ganancia x ventas</div>
               <div className="card-body">
                 <h4 className="card-title"><GrMoney size={40}/> ${totalUtility}</h4>
               </div>
@@ -145,6 +158,19 @@ const Dashboard = () => {
               <div className="card-header">Deuda</div>
               <div className="card-body">
                 <h4 className="card-title"><AiOutlineWarning size={40}/> ${totalDebt}</h4>
+              </div>
+            </div>
+            <div
+              className="col-lg-4 card text-black mb-3"
+              style={{
+                maxWidth: "27%",
+                marginInline: 25,
+                backgroundColor: "#54FA27",
+              }}
+            >
+              <div className="card-header">Utilidad</div>
+              <div className="card-body">
+                <h4 className="card-title"><GiPiggyBank size={40}/> ${totalUtility-totalExpenses  }</h4>
               </div>
             </div>
           </div>
