@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Sale } from "./Sale";
 import { SaleDetail } from "./SaleDetail";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import * as saleService from "../Sales/saleService";
 import * as saleDetailService from "../Sales/saleDetailService";
 import logo from './logoFH.png'
-import { BsTrash } from "react-icons/bs";
+
 
 function SaleDList() {
   interface Params {
     invoice?: string;
   }
 
-  const history = useHistory();
   const params = useParams<Params>();
   const [sales, setSales] = useState<Sale[]>([]);
   const [saleD, setSaleD] = useState<SaleDetail>();

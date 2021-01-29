@@ -19,10 +19,11 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import Navbar from "./components/Navigation/Navbar";
 import Footer from "./components/Navigation/Footer";
 import 'react-toastify/dist/ReactToastify.css';
-import Report from './components/reports/Report';
 import DepositForm from './components/Deposit/DepositForm';
 import DepositList from './components/Deposit/DepositList';
 import Dashboard from './components/Report/Dashboard'
+import Expenses from './components/Expenses/ExpenseForm'
+import ExpensesList from './components/Expenses/ExpenseList'
 
 
 ReactDOM.render(
@@ -40,10 +41,11 @@ ReactDOM.render(
         <Route path="/new-sale" component={SaleForm} />
         <Route path="/sales" component={Sales} />
         <Route path="/saledetail/:invoice" component={SaleDList} />
-        <Route path="/report" component={Report} />
         <Route path= "/new-deposit" component={DepositForm}/>
         <Route path= "/deposit" component={DepositList}/>
         <Route path= "/dashboard" component={Dashboard}/>
+        <Route path= "/new-expense" component={Expenses}/>
+        <Route path= "/expenses" component={ExpensesList}/>
       </Switch>
       <ToastContainer />
     </BrowserRouter>

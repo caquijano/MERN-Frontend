@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Dropdown } from "react-bootstrap";
 import {AiOutlineDashboard} from 'react-icons/ai'
 
 const Navbar = () => {
-  const [drop, setDrop] = useState(false);
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
       <div className="collapse navbar-collapse" id="navbarColor01">

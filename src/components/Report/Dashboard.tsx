@@ -2,49 +2,67 @@ import React, { useEffect, useState } from "react";
 import logo from "./3556940.jpg";
 import { SaleDetail } from "../Sales/SaleDetail";
 import * as SaleDetailService from "../Sales/saleDetailService";
+import { Sale } from "../Sales/Sale";
+import * as SaleService from "../Sales/saleService";
 import { Deposit } from "../Deposit/Deposit";
 import * as DepositService from "../Deposit/depositService";
-import { useHistory } from "react-router-dom";
-import {AiOutlineShoppingCart} from 'react-icons/ai'
-import {FcMoneyTransfer} from 'react-icons/fc'
+import { AiOutlineShoppingCart, AiOutlineWarning} from "react-icons/ai";
+import { FcMoneyTransfer } from "react-icons/fc";
+import { GrMoney } from "react-icons/gr";
+import { GiPayMoney } from "react-icons/gi";
 
 const Dashboard = () => {
   const [saleDetail, setSaleDetail] = useState<SaleDetail[]>([]);
+  const [sale, setSale] = useState<Sale[]>([]);
   const [deposit, setDeposit] = useState<Deposit[]>([]);
-  const [load, setLoad] = useState(true);
   const [totalSale, setTotalSale] = useState(0);
   const [totalDeposit, setTotalDeposit] = useState(0);
+  const [totalUtility, setTotalUtility] = useState(0);
+  const [totalDebt, setTotalDebt] = useState(0);
   const loadSales = async () => {
     const res = await SaleDetailService.getSaleDetails();
     setSaleDetail(res.data);
     const res2 = await DepositService.getDeposits();
     setDeposit(res2.data);
+    const res4 = await SaleService.getSales();
+    setSale(res4.data);
   };
 
   const sales = async () => {
-      let total = 0;
-      saleDetail.forEach(element => {
-          total = element.totalSale + total
-      });
-      setTotalSale(total)
-  }
+    let total = 0;
+    saleDetail.forEach((element) => {
+      total = element.totalSale + total;
+
+    });
+    setTotalSale(total);
+  };
   const deposits = async () => {
     let total = 0;
-    deposit.forEach(element => {
-        total = element.amount + total
+    deposit.forEach((element) => {
+      total = element.amount + total;
     });
-    setTotalDeposit(total)
-}
+    setTotalDeposit(total);
+  };
+  const utilities = async () => {
+    let total = 0;
+    let debts = 0;
+    sale.forEach((element) => {
+      total = parseInt(`${element.utility}`) + total;
+      debts = parseInt(`${element.priceBuy}`)*parseInt(`${element.amount}`)  + debts;
+    });
+    setTotalUtility(total);
+    setTotalDebt(debts-totalDeposit)
+  };
 
   useEffect(() => {
-      loadSales();
-  }, [])
+    loadSales();
+  }, []);
 
   useEffect(() => {
     sales();
     deposits();
-  }, [saleDetail, deposit])
-  
+    utilities();
+  }, [saleDetail, deposit, sale]);
 
   return (
     <div>
@@ -79,7 +97,9 @@ const Dashboard = () => {
             >
               <div className="card-header"> Ventas</div>
               <div className="card-body">
-                <h4 className="card-title"><AiOutlineShoppingCart size={40} />{" "} $ {totalSale}</h4>
+                <h4 className="card-title">
+                  <AiOutlineShoppingCart size={40} /> $ {totalSale}
+                </h4>
               </div>
             </div>
 
@@ -89,21 +109,23 @@ const Dashboard = () => {
             >
               <div className="card-header">Consignaciones</div>
               <div className="card-body">
-                <h4 className="card-title"><FcMoneyTransfer/> ${totalDeposit}</h4>
+                <h4 className="card-title">
+                  <FcMoneyTransfer size={40} /> ${totalDeposit}
+                </h4>
               </div>
             </div>
             <div
-              className="col-lg-4 card text-white bg-warning mb-3"
+              className="col-lg-4 card text-black border-warning mb-3"
               style={{ maxWidth: "27%", marginInline: 25 }}
             >
               <div className="card-header">Gastos</div>
               <div className="card-body">
-                <h4 className="card-title">Success card title</h4>
+                <h4 className="card-title"><GiPayMoney size={40}/> $000000</h4>
               </div>
             </div>
 
             <div
-              className="col-lg-4 card text-white mb-3"
+              className="col-lg-4 card text-black mb-3"
               style={{
                 maxWidth: "27%",
                 marginInline: 25,
@@ -112,7 +134,7 @@ const Dashboard = () => {
             >
               <div className="card-header">Utilidad</div>
               <div className="card-body">
-                <h4 className="card-title">Success card title</h4>
+                <h4 className="card-title"><GrMoney size={40}/> ${totalUtility}</h4>
               </div>
             </div>
 
@@ -122,7 +144,7 @@ const Dashboard = () => {
             >
               <div className="card-header">Deuda</div>
               <div className="card-body">
-                <h4 className="card-title">Success card title</h4>
+                <h4 className="card-title"><AiOutlineWarning size={40}/> ${totalDebt}</h4>
               </div>
             </div>
           </div>

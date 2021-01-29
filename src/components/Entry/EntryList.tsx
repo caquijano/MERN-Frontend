@@ -6,7 +6,6 @@ import * as itemService from "../Items/itemService";
 import { BsTrash } from 'react-icons/bs';
 import { FiEdit} from 'react-icons/fi';
 import { toast } from "react-toastify";
-import { useHistory } from "react-router-dom";
 const EntryList = () => {
 
   const initialState2 = {
@@ -16,7 +15,6 @@ const EntryList = () => {
     stock: 0,
     price: 0,
   };
-  const history = useHistory();
     const [entry, setEntry] = useState<Entry[]>([]);
     const [load, setLoad] = useState(true)
     const [loader, setLoader] = useState(true)
