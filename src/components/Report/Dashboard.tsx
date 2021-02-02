@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import logo from "./3556940.jpg";
 import { SaleDetail } from "../Sales/SaleDetail";
 import * as SaleDetailService from "../Sales/saleDetailService";
+import { EntryDetail } from "../Entry/EntryDetail";
+import * as EntryDetailService from "../Entry/entryDetailService";
 import { Sale } from "../Sales/Sale";
 import * as SaleService from "../Sales/saleService";
 import { Deposit } from "../Deposit/Deposit";
@@ -12,15 +14,21 @@ import { AiOutlineShoppingCart, AiOutlineWarning} from "react-icons/ai";
 import { FcMoneyTransfer } from "react-icons/fc";
 import { GrMoney } from "react-icons/gr";
 import { GiPayMoney, GiPiggyBank } from "react-icons/gi";
+import { Item } from "../Items/Item";
+import * as ItemService from "../Items/itemService";
 
 const Dashboard = () => {
   const [saleDetail, setSaleDetail] = useState<SaleDetail[]>([]);
   const [sale, setSale] = useState<Sale[]>([]);
+  const [items, setItems] = useState<Item[]>([]);
   const [deposit, setDeposit] = useState<Deposit[]>([]);
   const [expense, setExpense] = useState<Expense[]>([]);
+  const [entryDetail, setEntryDetail] = useState<EntryDetail[]>([]);
   const [totalSale, setTotalSale] = useState(0);
+  const [totalEntry, setTotalEntry] = useState(0);
   const [totalDeposit, setTotalDeposit] = useState(0);
   const [totalUtility, setTotalUtility] = useState(0);
+  const [totalItems, setTotalItems] = useState(0);
   const [totalDebt, setTotalDebt] = useState(0);
   const [totalExpenses, setTotalExpenses] = useState(0);
   const loadSales = async () => {
@@ -32,6 +40,10 @@ const Dashboard = () => {
     setExpense(res3.data);
     const res4 = await SaleService.getSales();
     setSale(res4.data);
+    const res5 = await EntryDetailService.getEntryDetails();
+    setEntryDetail(res5.data);
+    const res6 = await ItemService.getItems();
+    setItems(res6.data);
   };
 
   const sales = async () => {
@@ -41,6 +53,22 @@ const Dashboard = () => {
 
     });
     setTotalSale(total);
+  };
+  const it = async () => {
+    let total = 0;
+    items.forEach((element) => {
+      total = element.price*element.stock + total;
+
+    });
+    setTotalItems(total);
+  };
+  const entries = async () => {
+    let total = 0;
+    entryDetail.forEach((element) => {
+      total = element.totalEntry + total;
+
+    });
+    setTotalEntry(total);
   };
   const deposits = async () => {
     let total = 0;
@@ -73,10 +101,12 @@ const Dashboard = () => {
 
   useEffect(() => {
     sales();
+    it();
     deposits();
     utilities();
     expenses();
-  }, [saleDetail, deposit, sale, expense]);
+    entries();
+  }, [saleDetail, deposit, sale, expense, entryDetail, items]);
 
   return (
     <div>
@@ -145,12 +175,36 @@ const Dashboard = () => {
                 marginInline: 25,
               }}
             >
+              <div className="card-header">Costo de Inventario</div>
+              <div className="card-body">
+                <h4 className="card-title"><GrMoney size={40}/> ${totalItems}</h4>
+              </div>
+            </div>
+            <div
+              className="col-lg-4 card border-primary text-black mb-3"
+              style={{
+                maxWidth: "27%",
+                marginInline: 25,
+              }}
+            >
+              <div className="card-header">Total Remisiones</div>
+              <div className="card-body">
+                <h4 className="card-title"><GrMoney size={40}/> ${totalEntry}</h4>
+              </div>
+            </div>
+
+            <div
+              className="col-lg-4 card border-primary text-black mb-3"
+              style={{
+                maxWidth: "27%",
+                marginInline: 25,
+              }}
+            >
               <div className="card-header">Ganancia x ventas</div>
               <div className="card-body">
                 <h4 className="card-title"><GrMoney size={40}/> ${totalUtility}</h4>
               </div>
             </div>
-
             <div
               className="col-lg-4 card text-white bg-danger mb-3"
               style={{ maxWidth: "27%", marginInline: 25 }}

@@ -1,10 +1,9 @@
 export interface Entry{
     _id?: string;
-    invoice: string;
+    detailId?: number;
     productId?: string;
     productName?: string;
     amount: number;
-    date: string | Date;
     newPrice: number;
     createAt?: string | Date;
     updateAt?: string | Date;
