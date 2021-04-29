@@ -1,35 +1,37 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ToastContainer } from "react-toastify";
-import VideoList from './components/Videos/VideoList';
 import { Prueba } from './components/Videos/Prueba';
 import { VideoForm } from './components/Videos/VideoForm';
-import { ItemForm } from "./components/Items/ItemForm";
-import ItemList from "./components/Items/ItemList";
-import EntryForm from "./components/Entry/EntryForm";
-import EntryDList from "./components/Entry/EntryDList";
-import SaleForm from "./components/Sales/SaleForm";
-import SaleDList from "./components/Sales/SaleDList";
-import Sales from "./components/Sales/SaleList";
-import EntryList from "./components/Entry/EntryList";
+
 import 'bootswatch/dist/flatly/bootstrap.css';
+
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import Navbar from "./components/Navigation/Navbar";
 import Footer from "./components/Navigation/Footer";
 import 'react-toastify/dist/ReactToastify.css';
-import DepositForm from './components/Deposit/DepositForm';
-import DepositList from './components/Deposit/DepositList';
-import Dashboard from './components/Report/Dashboard'
-import Expenses from './components/Expenses/ExpenseForm'
-import ExpensesList from './components/Expenses/ExpenseList'
+
+import PublicRouter from './Router/PublicRouter';
+import { ContextSidebarProvider } from './context/ContextSidebar';
+import PrivateRouter from './Router/PrivateRouter';
 
 
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
+  <>
+  <BrowserRouter>
+      {!window.localStorage.getItem("loggedGreenUser") ? (
+        <PublicRouter/>
+      ) : (
+        <ContextSidebarProvider>
+          <PrivateRouter/>
+        </ContextSidebarProvider>
+        
+      )}
+      <ToastContainer />
+    </BrowserRouter>
+    {/*<BrowserRouter>
       <Navbar />
       <Switch>
         <Route exact path="/" component={VideoList} />
@@ -51,8 +53,8 @@ ReactDOM.render(
       </Switch>
       <ToastContainer />
     </BrowserRouter>
-    <Footer />
-  </React.StrictMode>,
+    <Footer />*/}
+  </>,
   document.getElementById('root')
 );
 
