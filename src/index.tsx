@@ -22,12 +22,13 @@ ReactDOM.render(
   <>
   <BrowserRouter>
       {!window.localStorage.getItem("loggedGreenUser") ? (
-        <PublicRouter/>
-      ) : (
+
         <ContextSidebarProvider>
           <PrivateRouter/>
         </ContextSidebarProvider>
+      ) : (
         
+        <PublicRouter/>
       )}
       <ToastContainer />
     </BrowserRouter>

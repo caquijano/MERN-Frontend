@@ -6,8 +6,8 @@ import { IoArrowBack } from "react-icons/io5";
 import ContextSidebar from "../../context/ContextSidebar";
 
 function SideBar() {
-  const array: any = userJson();
-  const name = array[1] + " " + array[2];
+ // const array: any = userJson();
+  //const name = array[1] + " " + array[2];
   const {position, setPosition} = useContext<any>(ContextSidebar)
   function handleClose() {
     setPosition(!position);
@@ -28,7 +28,7 @@ function SideBar() {
               borderRadius: "50%",
             }}
           />
-          <h5 style={{ color: "#ecf0f1", paddingTop: 15 }}>{name}</h5>
+          {/* <h5 style={{ color: "#ecf0f1", paddingTop: 15 }}>{name}</h5> */}
         </div>
         <ul className="SidebarList">
           {SideBarData.map((val, key) => {

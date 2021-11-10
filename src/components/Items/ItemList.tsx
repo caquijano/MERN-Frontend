@@ -63,7 +63,7 @@ const [search, setSearch] = useState("")
         <button type="button" onClick={()=>history.push("/new-item")} className="btn btn-primary" >Nuevo Producto <FiPlus/> </button>
       </div>
       <br/>
-        <div className="card border-primary mb-3" style={{ width: 1000 }}>
+        <div className="card border-primary mb-3" style={{ width:"95%"}}>
           <div className="card-header">Inventario</div>
           <div className="card-body">
             <table className="table table-striped">
@@ -76,7 +76,7 @@ const [search, setSearch] = useState("")
                   <th scope="col">Cant</th>
                   <th scope="col">Precio Compra</th>
                   <th scope="col">Precio Sugerido</th>
-                  <th scope="col">... Opciones... </th>
+                  <th scope="col">.....Opciones..... </th>
                 </tr>
               </thead>
               {items.map((item, index) => {

@@ -25,14 +25,14 @@ import "./router.css";
 function PrivateRouter() {
   const { position } = useContext<any>(ContextSidebar);
 
-  verifyToken();
+  // verifyToken();
 
   return (
     <>
       <Navbar />
-      <SideBar />
+      {/* <SideBar /> */}
       <div
-        className={position ? "PrivateRouter" : "PrivateRouter active"}
+        className={!position ? "PrivateRouter" : "PrivateRouter active"}
         style={{ float: "right" }}
       >
         <Switch>
